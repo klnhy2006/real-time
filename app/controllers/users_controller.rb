@@ -4,9 +4,10 @@ class UsersController < ApplicationController
 	end
 	
 	def show
-		puts "showwww"
 		@user = User.find_by(id: params[:id])
-		respond_with @user
+		if @user != current_user
+			return render json: {status: 'error', message: 'User not logged in'}
+		end
 	end
 
 	def create 

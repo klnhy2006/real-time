@@ -1,23 +1,18 @@
 class PostsController < ApplicationController
 	def index
-		posts = Post.all
-		newPosts = []
-		posts.each do |post|
-			author_name = post.user.name
-			newPosts.push({author: author_name, post: post})
-		end
-		respond_with newPosts
+		return render json: add_author_to_all_posts
 	end
 	
 	def create
 		post = current_user.posts.build(post_params)
 		if post.save
-			redirect_to current_user
+			return render json: {author: current_user.name, post: post} 
 		end
 	end
 	
 	def destroy
 		Post.destroy(params[:id])
+		return render json: add_author_to_all_posts
 	end
 	
 	private 
@@ -25,4 +20,14 @@ class PostsController < ApplicationController
 		def post_params 
 			params.require(:post).permit(:content) 
 		end 
+		
+		def add_author_to_all_posts
+			posts = Post.all
+			newPosts = []
+			posts.each do |post|
+				author_name = post.user.name
+				newPosts.push({author: author_name, post: post})
+			end
+			return newPosts
+		end
 end

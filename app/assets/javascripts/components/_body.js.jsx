@@ -19,22 +19,16 @@ var Body = React.createClass({
 	
 	handleDelete (id) {
 		$.ajax({ 
-			url: '/posts/'+ id, 
+			url: '/posts', 
 			type: 'DELETE', 
-		}).done(() => { this.removePost(id); });
-	}, 
-	
-	removePost (id) {
-		var newPosts = this.state.posts.filter((post) => {
-			return post.id != id;
-		});
-		this.setState({ posts: newPosts});
-	}, 
+			data: {id: id}
+		}).done((data) => { this.setState ({ posts: data }); });
+	},  
 	
 	render () {
 		return(
 			<div>
-				<NewPost user = {this.props.user} handleSubmit = {this.handleSubmit}/>
+				<NewPost handleSubmit = {this.handleSubmit}/>
 				<br/>
 				<AllPosts user = {this.props.user} posts = {this.state.posts} handleDelete = {this.handleDelete}/>
 			</div>
