@@ -23,6 +23,10 @@ var Post = React.createClass({
 		App.comments.delete_stuff(commentId);
 	},
 	
+	handleLike (commentId) {
+		App.comments.like_stuff(commentId);
+	},
+	
 	removeComment (id) {
 		var newComments = this.state.comments.filter ((comment) => {
 			return comment.comment.id != id;
@@ -37,6 +41,17 @@ var Post = React.createClass({
 		}
 	},
 	
+	updateLike (id) {
+		var newComments = [];
+		this.state.comments.forEach((comment) => {
+			if (comment.comment.id === id) {
+				comment.comment.like = !comment.comment.like;
+			}
+			newComments.push(comment);
+		});
+		this.setState({ comments: newComments });
+	},
+	
 	setupSubscription () {
 		var component = this;
 		App.comments = App.cable.subscriptions.create("CommentChannel", {
@@ -48,6 +63,9 @@ var Post = React.createClass({
 					case "delete_stuff":
 						component.removeComment (data['message']);
 						break;
+					case "like_stuff":
+						component.updateLike (data['message']);
+						break;
 					default:
 						break;
 				}
@@ -55,8 +73,11 @@ var Post = React.createClass({
 			post_new_stuff: function (data) {
 				return this.perform('post_new_stuff', {new_post: data});
 			},
-			delete_stuff: function (postId) {
-				return this.perform('delete_stuff', {delete_id: postId});
+			delete_stuff: function (commentId) {
+				return this.perform('delete_stuff', {delete_id: commentId});
+			},
+			like_stuff: function (commentId) {
+				return this.perform('like_stuff', {like_id: commentId});
 			}
 		});	
 	},
@@ -72,7 +93,8 @@ var Post = React.createClass({
 				{deleteButton}
 				<button onClick = {this.props.handleLike}>{likeButton}</button>
 				<NewComment handleSubmit = {this.handleSubmit} postId = {this.props.item.post.id} currentUser = {this.props.currentUser}/>
-				<AllComments comments = {this.state.comments} handleDelete = {this.handleDelete} currentUser = {this.props.currentUser}/>
+				<AllComments comments = {this.state.comments} handleDelete = {this.handleDelete} currentUser = {this.props.currentUser}
+					handleLike = {this.handleLike}/>
 			</div>
 		);
 	}

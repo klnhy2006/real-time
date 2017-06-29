@@ -23,10 +23,8 @@ class PostChannel < ApplicationCable::Channel
   
   def like_stuff (data)
 	post = Post.find(data['like_id'])
-	puts post.like == true
-	post.like = !post.like  #add like column in database, change button word based on value
+	post.like = !post.like 
 	if post.save
-	puts 'saved like'
 		ActionCable.server.broadcast "post", {message: data['like_id'], type: 'like_stuff'}
 	end
   end

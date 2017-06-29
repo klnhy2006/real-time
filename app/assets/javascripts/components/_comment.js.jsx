@@ -22,6 +22,10 @@ var Comment = React.createClass({
 		App.replies.delete_stuff(replyId);
 	},
 	
+	handleLike (replyId) {
+		App.replies.like_stuff(replyId);
+	},
+	
 	addNewReply: function (reply) {
 		if (reply.reply.comment_id == this.props.item.comment.id){
 			var newReplies = this.state.replies.concat (reply);
@@ -32,6 +36,17 @@ var Comment = React.createClass({
 	removeReply: function (id) {
 		var newReplies = this.state.replies.filter((reply) => {
 			return reply.reply.id != id; 
+		});
+		this.setState({ replies: newReplies });
+	},
+	
+	updateLike: function (id) {
+		var newReplies = [];
+		this.state.replies.forEach((reply) => {
+			if (reply.reply.id === id) {
+				reply.reply.like = !reply.reply.like;
+			}
+			newReplies.push(reply);
 		});
 		this.setState({ replies: newReplies });
 	},
@@ -47,6 +62,9 @@ var Comment = React.createClass({
 					case "delete_stuff":
 						component.removeReply (data['message']);
 						break;
+					case "like_stuff":
+						component.updateLike (data['message']);
+						break;
 					default:
 						break;
 				}
@@ -54,22 +72,28 @@ var Comment = React.createClass({
 			post_new_stuff: function (data) {
 				return this.perform('post_new_stuff', {new_post: data});
 			},
-			delete_stuff: function (postId) {
-				return this.perform('delete_stuff', {delete_id: postId});
+			delete_stuff: function (replyId) {
+				return this.perform('delete_stuff', {delete_id: replyId});
+			},
+			like_stuff: function (replyId) {
+				return this.perform('like_stuff', {like_id: replyId});
 			}
 		});	
 	},
 	
 	render: function () {
 		var deleteButton = (this.props.item.comment.user_id === this.props.currentUser.id )? <button onClick = {this.props.handleDelete}>Delete Comment</button> : null; 
+		var likeButton = ( this.props.item.comment.like === true ) ? "Dislike Comment" : "Like Comment";
 		return (
 			<div>
 				<span>Comment posted at {this.props.item.comment.created_at} by {this.props.item.author}</span>
 				<br/>
 				<span>Comment: {this.props.item.comment.content}</span>
-				{deleteButton}	
+				{deleteButton}
+				<button onClick = {this.props.handleLike}>{likeButton}</button>
 				<NewReply handleSubmit = {this.handleSubmit} userId = {this.props.currentUser.id} commentId = {this.props.item.comment.id}/>
-				<AllReplies replies = {this.state.replies} handleDelete = {this.handleDelete} currentUser = {this.props.currentUser} />
+				<AllReplies replies = {this.state.replies} handleDelete = {this.handleDelete} currentUser = {this.props.currentUser} 
+					handleLike = {this.handleLike}/>
 			</div>
 		);
 	}

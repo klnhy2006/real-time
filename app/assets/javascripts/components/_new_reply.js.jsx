@@ -1,6 +1,6 @@
 var NewReply = React.createClass ({
 	handleClick () {
-		var response = {reply: { content: this.refs.content.value, user_id: this.props.userId }, commentId : this.props.commentId};
+		var response = {reply: { content: this.refs.content.value, user_id: this.props.userId, like: false }, commentId : this.props.commentId};
 		this.props.handleSubmit( response );
 	},
 	render: function () {

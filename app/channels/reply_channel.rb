@@ -23,4 +23,12 @@ class ReplyChannel < ApplicationCable::Channel
 	Reply.destroy(data['delete_id'])
 	ActionCable.server.broadcast "reply", {message: data['delete_id'], type: 'delete_stuff'}
   end
+  
+  def like_stuff (data)
+	reply = Reply.find(data['like_id'])
+	reply.like = !reply.like
+	if reply.save
+		ActionCable.server.broadcast "reply", {message: data['like_id'], type: 'like_stuff'}
+	end
+  end
 end
