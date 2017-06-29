@@ -1,6 +1,5 @@
 class PostChannel < ApplicationCable::Channel
   def subscribed
-	puts "subssssss"
     stream_from "post"
   end
 
@@ -9,7 +8,11 @@ class PostChannel < ApplicationCable::Channel
   end
   
   def post_new_stuff (data)
-	puts "in possssssst"
-	ActionCable.server.broadcast "post", message: data['new_post']
+	ActionCable.server.broadcast "post", {message: data['new_post'], type: 'post_new_stuff'}
+  end
+  
+  def delete_stuff (data)
+	Post.destroy(data['delete_id'])
+	ActionCable.server.broadcast "post", {message: data['delete_id'], type: 'delete_stuff'}
   end
 end
