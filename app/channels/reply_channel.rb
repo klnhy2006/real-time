@@ -8,7 +8,15 @@ class ReplyChannel < ApplicationCable::Channel
   end
   
   def post_new_stuff (data)
-	ActionCable.server.broadcast "reply", {message: data['new_post'], type: 'post_new_stuff'}
+	current_user = User.find(data['new_post']['reply']['user_id'])
+	comment = Comment.find(data['new_post']['commentId'])
+	reply_params = data['new_post']['reply']
+	puts reply_params
+	reply = comment.replies.build(reply_params)
+	if reply.save
+		puts "success"
+		ActionCable.server.broadcast "reply", {message: {reply: reply, author: current_user.name}, type: 'post_new_stuff'}
+	end
   end
   
   def delete_stuff (data)

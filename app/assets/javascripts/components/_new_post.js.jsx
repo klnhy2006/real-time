@@ -1,10 +1,7 @@
 var NewPost = React.createClass({
 	handleClick: function () {
-		$.ajax({
-			method: "POST",
-			url: "/posts",
-			data: { post: {content: this.refs.content.value}}
-		}).done( (data) => {alert('in new post handle click:'+data); this.props.handleSubmit(data); });
+		var response = { post: {content: this.refs.content.value}, author: this.props.currentUser.id};
+		this.props.handleSubmit(response); 
 	},
 	
 	render: function (){

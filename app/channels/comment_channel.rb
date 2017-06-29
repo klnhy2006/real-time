@@ -12,7 +12,7 @@ class CommentChannel < ApplicationCable::Channel
 	comment_params = {content: data['new_post']['comment']['content'], user_id: data['new_post']['comment']['user_id']}
 	comment = post.comments.build(comment_params)
 	if comment.save
-		author = data['new_post']['author']
+		author = User.find(data['new_post']['comment']['user_id']).name
 		ActionCable.server.broadcast "comment", {message: {author: author, comment: comment}, type: 'post_new_stuff'}
 	else
 		puts "not saved"

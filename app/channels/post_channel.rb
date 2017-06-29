@@ -8,7 +8,12 @@ class PostChannel < ApplicationCable::Channel
   end
   
   def post_new_stuff (data)
-	ActionCable.server.broadcast "post", {message: data['new_post'], type: 'post_new_stuff'}
+	post_params = {content: data['new_post']['post']['content']}
+	currentUser = User.find(data['new_post']['author'])
+	post = currentUser.posts.build(post_params)
+		if post.save
+			ActionCable.server.broadcast "post", {message: {author: currentUser.name, post: post}, type: 'post_new_stuff'} 
+		end
   end
   
   def delete_stuff (data)

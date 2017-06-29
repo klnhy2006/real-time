@@ -1,6 +1,6 @@
 var NewComment = React.createClass({
 	handleClick() { 
-		var response = {comment: { content: this.refs.content.value, user_id: this.props.currentUser.id }, postId: this.props.postId, author: this.props.currentUser.name }
+		var response = {comment: { content: this.refs.content.value, user_id: this.props.currentUser.id }, postId: this.props.postId}
 		this.props.handleSubmit(response);
 	},
 	

@@ -4,9 +4,9 @@ Rails.application.routes.draw do
 	resources :posts
 	resources :comments
 	resources :replies
-	delete '/replies', to: 'replies#destroy'
-	delete '/posts', to: 'posts#destroy'
-	delete '/comments', to: 'comments#destroy'
+	# delete '/replies', to: 'replies#destroy'
+	# delete '/posts', to: 'posts#destroy'
+	# delete '/comments', to: 'comments#destroy'
 	post '/sessions', to: 'sessions#create'
 	delete '/logout', to: 'sessions#destroy'
 	

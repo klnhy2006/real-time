@@ -3,23 +3,23 @@ class PostsController < ApplicationController
 		return render json: add_author_to_all_posts
 	end
 	
-	def create
-		post = current_user.posts.build(post_params)
-		if post.save
-			return render json: {author: current_user.name, post: post} 
-		end
-	end
+	# def create
+		# post = current_user.posts.build(post_params)
+		# if post.save
+			# return render json: {author: current_user.name, post: post} 
+		# end
+	# end
 	
-	def destroy
-		Post.destroy(params[:id])
-		return render json: add_author_to_all_posts
-	end
+	# def destroy
+		# Post.destroy(params[:id])
+		# return render json: add_author_to_all_posts
+	# end
 	
 	private 
 
-		def post_params 
-			params.require(:post).permit(:content) 
-		end 
+		# def post_params 
+			# params.require(:post).permit(:content) 
+		# end 
 		
 		def add_author_to_all_posts
 			posts = Post.all

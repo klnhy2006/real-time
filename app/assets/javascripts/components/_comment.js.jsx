@@ -23,8 +23,10 @@ var Comment = React.createClass({
 	},
 	
 	addNewReply: function (reply) {
-		var newReplies = this.state.replies.concat (reply);
-		this.setState({ replies: newReplies });
+		if (reply.reply.comment_id == this.props.item.comment.id){
+			var newReplies = this.state.replies.concat (reply);
+			this.setState({ replies: newReplies });
+		} 
 	},
 	
 	removeReply: function (id) {

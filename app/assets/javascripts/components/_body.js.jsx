@@ -60,7 +60,7 @@ var Body = React.createClass({
 	render () {
 		return(
 			<div>
-				<NewPost handleSubmit = {this.handleSubmit}/>
+				<NewPost handleSubmit = {this.handleSubmit} currentUser = {this.props.user}/>
 				<br/>
 				<AllPosts user = {this.props.user} posts = {this.state.posts} handleDelete = {this.handleDelete}/>
 			</div>

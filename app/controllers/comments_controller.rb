@@ -4,22 +4,22 @@ class CommentsController < ApplicationController
 	end
 	
 	def create
-		post = Post.find(params[:postId])
-		comment = post.comments.build(comment_params)
-		if comment.save
-			return render json: {author: current_user.name, comment: comment}
-		end
+		# post = Post.find(params[:postId])
+		# comment = post.comments.build(comment_params)
+		# if comment.save
+			# return render json: {author: current_user.name, comment: comment}
+		# end
 	end
 	
 	def destroy
-		Comment.destroy(params[:id])
-		return render json: {status: :ok}
+		# Comment.destroy(params[:id])
+		# return render json: {status: :ok}
 	end
 	
 	private
-		def comment_params 
-			params.require(:comment).permit(:content, :user_id) 
-		end 
+		# def comment_params 
+			# params.require(:comment).permit(:content, :user_id) 
+		# end 
 		
 		def add_author_to_comment (postId)
 			post = Post.find(postId)
