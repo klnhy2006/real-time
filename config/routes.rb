@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
 	root 'site#index'
 	resources :users
 	resources :posts
@@ -10,5 +9,7 @@ Rails.application.routes.draw do
 	delete '/comments', to: 'comments#destroy'
 	post '/sessions', to: 'sessions#create'
 	delete '/logout', to: 'sessions#destroy'
+	
+	mount ActionCable.server => '/cable'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
