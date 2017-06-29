@@ -21,6 +21,10 @@ var Body = React.createClass({
 		App.posts.delete_stuff(postId);
 	},
 	
+	handleLike (postId) {
+		App.posts.like_stuff(postId);
+	},
+	
 	addNewPost (post) {
 		var newState = this.state.posts.concat( post );
 		this.setState({ posts: newState });
@@ -29,6 +33,17 @@ var Body = React.createClass({
 	removePost: function (id) {
 		var newPosts = this.state.posts.filter((post) => {
 			return post.post.id != id;
+		});
+		this.setState({ posts: newPosts });
+	},
+	
+	updataLike: function (id) {
+		var newPosts = [];
+		this.state.posts.forEach((post) => {
+			if (post.post.id === id) {
+				post.post.like = !post.post.like;
+			}
+			newPosts.push(post);
 		});
 		this.setState({ posts: newPosts });
 	},
@@ -44,6 +59,9 @@ var Body = React.createClass({
 					case "delete_stuff":
 						component.removePost (data['message']);
 						break;
+					case "like_stuff":
+						component.updataLike (data['message']);
+						break;
 					default:
 						break;
 				}
@@ -53,6 +71,9 @@ var Body = React.createClass({
 			},
 			delete_stuff: function (postId) {
 				return this.perform('delete_stuff', {delete_id: postId});
+			},
+			like_stuff: function (postId) {
+				return this.perform('like_stuff', {like_id: postId});
 			}
 		});	
 	},
@@ -62,7 +83,8 @@ var Body = React.createClass({
 			<div>
 				<NewPost handleSubmit = {this.handleSubmit} currentUser = {this.props.user}/>
 				<br/>
-				<AllPosts user = {this.props.user} posts = {this.state.posts} handleDelete = {this.handleDelete}/>
+				<AllPosts user = {this.props.user} posts = {this.state.posts} 
+					handleDelete = {this.handleDelete} handleLike = {this.handleLike}/>
 			</div>
 		);
 	}

@@ -1,6 +1,10 @@
 var AllPosts = React.createClass ({
-	handleDelete(id) {
+	handleDelete (id) {
 		this.props.handleDelete(id);
+	},
+	
+	handleLike (id) {
+		this.props.handleLike(id);
 	},
 	
 	render: function () {
@@ -8,7 +12,8 @@ var AllPosts = React.createClass ({
 			return (
 				<div key = {post.post.id}>
 					<Post item = {post} currentUser = {this.props.user}
-						handleDelete = {this.handleDelete.bind(this, post.post.id)} />
+						handleDelete = {this.handleDelete.bind(this, post.post.id)}
+						handleLike = {this.handleLike.bind(this, post.post.id)}/>
 					<br/>
 				</div>
 			);

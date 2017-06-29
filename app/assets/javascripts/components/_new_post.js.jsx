@@ -1,6 +1,6 @@
 var NewPost = React.createClass({
 	handleClick: function () {
-		var response = { post: {content: this.refs.content.value}, author: this.props.currentUser.id};
+		var response = { post: {content: this.refs.content.value, like: false}, author: this.props.currentUser.id};
 		this.props.handleSubmit(response); 
 	},
 	

@@ -63,12 +63,14 @@ var Post = React.createClass({
 	
 	render: function () {
 		var deleteButton = (this.props.item.post.user_id === this.props.currentUser.id)? <button onClick = {this.props.handleDelete}>Delete</button>: null;
+		var likeButton = (this.props.item.post.like === false )? "Like Post" : "Dislike Post"
 		return (
 			<div>
 				<span>Posted at {this.props.item.post.created_at} by {this.props.item.author}</span>
 				<br/>
 				<span>Content: {this.props.item.post.content}</span>
 				{deleteButton}
+				<button onClick = {this.props.handleLike}>{likeButton}</button>
 				<NewComment handleSubmit = {this.handleSubmit} postId = {this.props.item.post.id} currentUser = {this.props.currentUser}/>
 				<AllComments comments = {this.state.comments} handleDelete = {this.handleDelete} currentUser = {this.props.currentUser}/>
 			</div>
