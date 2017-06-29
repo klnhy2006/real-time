@@ -6,7 +6,7 @@ var AllComments = React.createClass({
 	render: function () {
 		var comments = this.props.comments.map((comment) => {
 			return (
-				<div key = {comment.id}>
+				<div key = {comment.comment.id}>
 					<Comment item= {comment} currentUser = {this.props.currentUser}
 						handleDelete = {this.handleDelete.bind(this, comment.comment.id)}/>
 				</div>

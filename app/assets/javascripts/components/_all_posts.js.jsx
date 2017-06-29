@@ -6,7 +6,7 @@ var AllPosts = React.createClass ({
 	render: function () {
 		var posts = this.props.posts.map ((post) => {
 			return (
-				<div >
+				<div key = {post.post.id}>
 					<Post item = {post} currentUser = {this.props.user}
 						handleDelete = {this.handleDelete.bind(this, post.post.id)} />
 					<br/>
