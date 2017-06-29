@@ -11,21 +11,20 @@ var Comment = React.createClass({
 		}).done((data) => {
 			this.setState({ replies: data});
 		});
+		this.setupSubscription();
 	},
 	
-	handleSubmit: function (reply) {
+	handleSubmit (reply) {
+		App.replies.post_new_stuff(reply);
+	},
+	
+	handleDelete (replyId) {
+		App.replies.delete_stuff(replyId);
+	},
+	
+	addNewReply: function (reply) {
 		var newReplies = this.state.replies.concat (reply);
 		this.setState({ replies: newReplies });
-	},
-	
-	handleDelete: function (id) {
-		$.ajax({
-			method: 'DELETE',
-			url: '/replies',
-			data: {id: id}
-		}).done (() => {
-			this.removeReply(id);
-		});
 	},
 	
 	removeReply: function (id) {
@@ -33,6 +32,30 @@ var Comment = React.createClass({
 			return reply.reply.id != id; 
 		});
 		this.setState({ replies: newReplies });
+	},
+	
+	setupSubscription: function () {
+		var component = this;
+		App.replies = App.cable.subscriptions.create("ReplyChannel", {
+			received: function (data) {
+				switch (data.type) {
+					case "post_new_stuff":
+						component.addNewReply(data['message']);
+						break;
+					case "delete_stuff":
+						component.removeReply (data['message']);
+						break;
+					default:
+						break;
+				}
+			},
+			post_new_stuff: function (data) {
+				return this.perform('post_new_stuff', {new_post: data});
+			},
+			delete_stuff: function (postId) {
+				return this.perform('delete_stuff', {delete_id: postId});
+			}
+		});	
 	},
 	
 	render: function () {

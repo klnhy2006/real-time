@@ -1,12 +1,7 @@
 var NewComment = React.createClass({
 	handleClick() { 
-		$.ajax({ 
-			url: '/comments', 
-			type: 'POST', 
-			data: { comment: { content: this.refs.content.value, user_id: this.props.userId }, postId: this.props.postId }, 
-			success: (response) => 
-				{ this.props.handleSubmit( response ); } 
-		});
+		var response = {comment: { content: this.refs.content.value, user_id: this.props.currentUser.id }, postId: this.props.postId, author: this.props.currentUser.name }
+		this.props.handleSubmit(response);
 	},
 	
 	render: function () {

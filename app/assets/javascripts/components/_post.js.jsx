@@ -31,8 +31,10 @@ var Post = React.createClass({
 	}, 
 	
 	addNewComment (comment) {
-		var newState = this.state.comments.concat( comment );
-		this.setState({ comments: newState });
+		if (comment.comment.post_id == this.props.item.post.id) {
+			var newState = this.state.comments.concat( comment );
+			this.setState({ comments: newState });
+		}
 	},
 	
 	setupSubscription () {
@@ -67,7 +69,7 @@ var Post = React.createClass({
 				<br/>
 				<span>Content: {this.props.item.post.content}</span>
 				{deleteButton}
-				<NewComment handleSubmit = {this.handleSubmit} postId = {this.props.item.post.id} userId = {this.props.currentUser.id}/>
+				<NewComment handleSubmit = {this.handleSubmit} postId = {this.props.item.post.id} currentUser = {this.props.currentUser}/>
 				<AllComments comments = {this.state.comments} handleDelete = {this.handleDelete} currentUser = {this.props.currentUser}/>
 			</div>
 		);
