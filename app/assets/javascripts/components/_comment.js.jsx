@@ -30,7 +30,7 @@ var Comment = React.createClass({
 	
 	removeReply: function (id) {
 		var newReplies = this.state.replies.filter((reply) => {
-			return reply.id != id; //might need to be fixed
+			return reply.reply.id != id; 
 		});
 		this.setState({ replies: newReplies });
 	},

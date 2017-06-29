@@ -12,19 +12,15 @@ var Post = React.createClass({
 			data: {postId: this.props.item.post.id}
 		}).done( (data) => {
 			this.setState({ comments: data}) });
+			this.setupSubscription();
 	},
 	
 	handleSubmit (comment) {
-		var newState = this.state.comments.concat( comment );
-		this.setState({ comments: newState});
+		App.comments.post_new_stuff(comment);
 	},
-	
-	handleDelete (id) {
-		$.ajax ({
-			url: '/comments',
-			type: 'DELETE',
-			data: {id: id}
-		}).done( (data) => {this.removeComment(id);} );
+
+	handleDelete (commentId) {
+		App.comments.delete_stuff(commentId);
 	},
 	
 	removeComment (id) {
@@ -33,6 +29,35 @@ var Post = React.createClass({
 		});
 		this.setState({ comments: newComments });
 	}, 
+	
+	addNewComment (comment) {
+		var newState = this.state.comments.concat( comment );
+		this.setState({ comments: newState });
+	},
+	
+	setupSubscription () {
+		var component = this;
+		App.comments = App.cable.subscriptions.create("CommentChannel", {
+			received: function (data) {
+				switch (data.type) {
+					case "post_new_stuff":
+						component.addNewComment(data['message']);
+						break;
+					case "delete_stuff":
+						component.removeComment (data['message']);
+						break;
+					default:
+						break;
+				}
+			},
+			post_new_stuff: function (data) {
+				return this.perform('post_new_stuff', {new_post: data});
+			},
+			delete_stuff: function (postId) {
+				return this.perform('delete_stuff', {delete_id: postId});
+			}
+		});	
+	},
 	
 	render: function () {
 		var deleteButton = (this.props.item.post.user_id === this.props.currentUser.id)? <button onClick = {this.props.handleDelete}>Delete</button>: null;
