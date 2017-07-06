@@ -54,3 +54,5 @@ gem 'responders'
 
 gem 'react-rails'
 gem 'jquery-rails'
+
+gem 'bootstrap-sass', '~> 3.3.6'

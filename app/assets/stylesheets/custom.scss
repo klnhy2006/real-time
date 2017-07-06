@@ -1,0 +1,138 @@
+
+@import "bootstrap";
+
+
+@mixin box_sizing {
+  -moz-box-sizing:    border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing:         border-box;
+}
+
+body {
+  padding-top: 60px;
+}
+
+section {
+  overflow: auto;
+}
+
+h1 {
+	text-align: center;
+}
+
+
+/* sidebar */
+
+aside {
+  section {
+    margin-top: 20px;
+    padding: 10px 0;
+    .Search-Result {
+	  width: 70%;
+    }
+  }
+  h1 {
+	  font-size: 3em;
+      text-align: left;
+      margin-bottom: 10px;
+      margin-top: 5px;
+    }
+}
+
+input, textarea, select, .uneditable-input {
+  border: 1px solid #bbb;
+  #width: 100%;
+  margin-bottom: 15px;
+  @include box_sizing;
+}
+
+input {
+  height: auto !important;
+}
+
+
+/*post*/
+.new-post {
+	
+	textarea {
+	  width: 100%;
+	  resize: none;
+	}
+	button {
+	  position: relative;
+	  left: 90%;
+	}
+}
+.post {
+  background-color: lightgrey;
+  padding: 1px 5px;
+  margin: 7px 0px;
+  p {
+	font-size: 1.5em;
+  }
+  h2 {
+	font-size: 0.7em;
+	text-align: right;
+	text-decoration: underline;
+	color: grey;
+  }
+}
+
+/*comment*/
+.new-comment {
+	margin-top: 3px;
+	input {
+	  width: 80%;
+	  display: inline;
+	  padding: 1px 3px; 
+	}
+	button {
+	  padding: 1px 3px;
+	}
+}
+.comment {
+	background-color: #F6F7F9;
+	padding: 1px 5px;
+	margin: 5px 0px;
+	width: 80%;
+	p {
+	  width: 100%; 
+	  font-size: 1.0em;
+	}
+	h3 {
+	  font-size: 0.5em;
+	  text-align: right;
+	  text-decoration: underline;
+	  color: grey;
+    }
+}
+
+/*reply*/
+.new-reply {
+	margin-top: 3px;
+	input {
+	  width: 60%;
+	  display: inline;
+	  padding: 1px 3px; 
+	}
+	button {
+	  padding: 1px 3px;
+	}
+}
+.reply {
+	background-color: lightgrey;
+	padding: 1px 5px;
+	margin: 3px 0px;
+	width: 60%;
+	p {
+	  width: 100%;
+	  font-size: 0.8em;
+	 
+	}
+	h4 {
+	  font-size: 0.3em;
+	  text-align: left;
+	  text-decoration: underline;
+	  color: grey;
+    }
+}

@@ -79,12 +79,24 @@ var Body = React.createClass({
 	},
 	
 	render () {
+		var posts;
+		if (this.props.selectedPost.length != 0) {
+			posts = (<AllPosts user = {this.props.user} posts = {this.props.selectedPost} 
+					handleDelete = {this.handleDelete} handleLike = {this.handleLike}/> ); 
+		} else {
+			posts = (
+				<div>
+					<NewPost handleSubmit = {this.handleSubmit} currentUser = {this.props.user}/>
+					<br/>
+					<AllPosts user = {this.props.user} posts = {this.state.posts} 
+						handleDelete = {this.handleDelete} handleLike = {this.handleLike}/>
+				</div>
+			);
+		}
+		
 		return(
 			<div>
-				<NewPost handleSubmit = {this.handleSubmit} currentUser = {this.props.user}/>
-				<br/>
-				<AllPosts user = {this.props.user} posts = {this.state.posts} 
-					handleDelete = {this.handleDelete} handleLike = {this.handleLike}/>
+				{posts}
 			</div>
 		);
 	}

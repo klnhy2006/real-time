@@ -1,7 +1,8 @@
 var Post = React.createClass({
 	 getInitialState() {
         return { 
-			comments: []
+			comments: [],
+			clicked: false
 		}
     },
 	
@@ -82,19 +83,24 @@ var Post = React.createClass({
 		});	
 	},
 	
+	comClicked: function () {
+		this.setState({ clicked: true });
+	},
 	render: function () {
 		var deleteButton = (this.props.item.post.user_id === this.props.currentUser.id)? <button onClick = {this.props.handleDelete}>Delete</button>: null;
 		var likeButton = (this.props.item.post.like === false )? "Like Post" : "Dislike Post"
+		var commentButton = (this.state.clicked) ? <NewComment handleSubmit = {this.handleSubmit} postId = {this.props.item.post.id} currentUser = {this.props.currentUser}/> : <button onClick = {this.comClicked}>Comment</button>;
 		return (
-			<div>
-				<span>Posted at {this.props.item.post.created_at} by {this.props.item.author}</span>
-				<br/>
-				<span>Content: {this.props.item.post.content}</span>
-				{deleteButton}
-				<button onClick = {this.props.handleLike}>{likeButton}</button>
-				<NewComment handleSubmit = {this.handleSubmit} postId = {this.props.item.post.id} currentUser = {this.props.currentUser}/>
+			<div className = "post" >
+				<p>
+					<h2>Posted at {this.props.item.post.created_at} by {this.props.item.author}</h2>
+					{this.props.item.post.content}
+				</p> 
+				{deleteButton} <button onClick = {this.props.handleLike}>{likeButton}</button>
+				{commentButton}
 				<AllComments comments = {this.state.comments} handleDelete = {this.handleDelete} currentUser = {this.props.currentUser}
 					handleLike = {this.handleLike}/>
+				<br/>
 			</div>
 		);
 	}

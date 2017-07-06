@@ -1,20 +1,19 @@
 var LogIn = React.createClass ({
 	handleSubmit () {
-		alert('handle submit');
 		$.ajax({
 			method: 'POST',
 			url: '/sessions',
 			data: {name: this.refs.user_name.value, password: this.refs.password.value}
-		}).done(() => {alert('haha');});
+		});
 	},
 	
 	render: function () {
 		return (
-			<div>
-				<input type='text' ref='user_name' placeholder='Enter user name'/>
-				<input type='password' ref='password' placeholder='Enter password'/>
-				<button onClick={this.handleSubmit}>LogIn</button>
-			</div>
+				<div>
+					<input className = 'form-control' type='text' ref='user_name' placeholder='Enter user name'/>
+					<input className = 'form-control' type='password' ref='password' placeholder='Enter password'/>
+					<button className = 'btn btn-primary' onClick={this.handleSubmit}>LogIn</button>
+				</div>
 		);
 	}
 });
