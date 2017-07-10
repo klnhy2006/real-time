@@ -4,7 +4,9 @@ var NewPost = React.createClass({
 	},
 	
 	handleClick: function () {
-		var response = { post: {content: this.refs.content.value, like: false}, author: this.props.currentUser.id};
+		alert("img: "+ this.refs.img.value);
+		var response = { post: {content: this.refs.content.value, like: false, picture: this.refs.img.value }, author: this.props.currentUser.id};
+		alert(response.post.picture);
 		this.props.handleSubmit(response); 
 		this.setState({ textField: ""});
 	},
@@ -19,6 +21,7 @@ var NewPost = React.createClass({
 			<div className = "new-post">
 				<textarea className = "form-control" ref ='content' placeholder ='Post something' value = {this.state.textField}
 					onChange = {this.handleChange}/> 
+				<input type = "file" ref = "img" />
 				<button onClick = {this.handleClick} className ="btn btn-primary" >Post</button> 
 			</div>
 		);

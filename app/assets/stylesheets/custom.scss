@@ -70,12 +70,13 @@ input {
   p {
 	font-size: 1.5em;
   }
-  h2 {
-	font-size: 0.7em;
-	text-align: right;
-	text-decoration: underline;
-	color: grey;
-  }
+  span {
+		font-size: 0.7em;
+		text-align: right;
+		text-decoration: underline;
+		color: grey;
+		display: block;
+	  }
 }
 
 /*comment*/
@@ -99,11 +100,12 @@ input {
 	  width: 100%; 
 	  font-size: 1.0em;
 	}
-	h3 {
+	span {
 	  font-size: 0.5em;
 	  text-align: right;
 	  text-decoration: underline;
 	  color: grey;
+	  display: block;
     }
 }
 

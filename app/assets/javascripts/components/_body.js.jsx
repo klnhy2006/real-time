@@ -14,6 +14,7 @@ var Body = React.createClass({
 	},
 	
 	handleSubmit (post) {
+		alert("in body:"+ post.post.picture);
 		App.posts.post_new_stuff(post);
 	},
 	

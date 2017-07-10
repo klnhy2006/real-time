@@ -12,6 +12,7 @@ class PostChannel < ApplicationCable::Channel
 	currentUser = User.find(data['new_post']['author'])
 	post = currentUser.posts.build(post_params)
 		if post.save
+			puts post.picture
 			ActionCable.server.broadcast "post", {message: {author: currentUser.name, post: post}, type: 'post_new_stuff'} 
 		end
   end

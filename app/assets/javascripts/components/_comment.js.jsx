@@ -95,7 +95,7 @@ var Comment = React.createClass({
 		return (
 			<div className = "comment">
 				<p>
-					<h3>Comment posted at {this.props.item.comment.created_at} by {this.props.item.author}</h3>
+					<span>Comment posted at {this.props.item.comment.created_at} by {this.props.item.author}</span>
 					{this.props.item.comment.content}
 				</p> 
 				{deleteButton}<button onClick = {this.props.handleLike}>{likeButton}</button>

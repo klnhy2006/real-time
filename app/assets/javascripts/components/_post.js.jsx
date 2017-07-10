@@ -90,11 +90,14 @@ var Post = React.createClass({
 		var deleteButton = (this.props.item.post.user_id === this.props.currentUser.id)? <button onClick = {this.props.handleDelete}>Delete</button>: null;
 		var likeButton = (this.props.item.post.like === false )? "Like Post" : "Dislike Post"
 		var commentButton = (this.state.clicked) ? <NewComment handleSubmit = {this.handleSubmit} postId = {this.props.item.post.id} currentUser = {this.props.currentUser}/> : <button onClick = {this.comClicked}>Comment</button>;
+		//alert(this.props.item.post.picture);
+		var image = (this.props.item.post.picture) ? <img src = {this.props.item.post.picture}/> : null ;
 		return (
 			<div className = "post" >
 				<p>
-					<h2>Posted at {this.props.item.post.created_at} by {this.props.item.author}</h2>
+					<span>Posted at {this.props.item.post.created_at} by {this.props.item.author}</span>
 					{this.props.item.post.content}
+					{image}
 				</p> 
 				{deleteButton} <button onClick = {this.props.handleLike}>{likeButton}</button>
 				{commentButton}
